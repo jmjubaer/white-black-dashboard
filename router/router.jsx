@@ -8,6 +8,9 @@ import CustomerOrder from "../src/components/CustomerOrder";
 import TopMovingText from "../src/components/TopMovingText";
 import BannerMovingText from "../src/components/BannerMovingText";
 import SecondBannerMovingText from "../src/components/SecondBannerMovingText";
+import Posts from "../src/components/Posts";
+import HighlightsProducts from "../src/components/HighlightsProducts";
+import ContactUs from "../src/components/ContactUs";
 
 
 
@@ -43,6 +46,18 @@ const router = createBrowserRouter([
             {
                 path: "/customerOrder",
                 element: <CustomerOrder></CustomerOrder>,
+            },
+            {
+                path: "/posts",
+                element: <Posts></Posts>,
+            },
+            {
+                path: "/highlights-product",
+                element: <HighlightsProducts></HighlightsProducts>,
+            },
+            {
+                path: "/contact-us",
+                element: <ContactUs></ContactUs>,
             },
 
         ],

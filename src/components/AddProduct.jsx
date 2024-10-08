@@ -68,7 +68,7 @@ const AddProduct = () => {
     const onSubmit = (data) => {
         toLowerCaseFields(data);
         data.images = imageUrls;
-        mutation.mutate(data);
+        mutation.mutate({...data,timeStump: new Date()});
     };
 
     return (
@@ -121,7 +121,6 @@ const AddProduct = () => {
                     <input
                         id='price'
                         type='number'
-                        step='0.01'
                         {...register("price", { required: true })}
                         className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
                     />
@@ -159,6 +158,7 @@ const AddProduct = () => {
                         id='status'
                         {...register("status", { required: true })}
                         className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-white focus:ring-indigo-500 focus:border-indigo-500'>
+                        <option value=''>Select....</option>
                         <option value='in-stock'>In Stock</option>
                         <option value='sold-out'>Sold Out</option>
                     </select>
@@ -202,8 +202,12 @@ const AddProduct = () => {
                         <option value=''>Select...</option>
                         <option value='tshirt'>T-shirt</option>
                         <option value='polos'>Polos</option>
+                        <option value='premium-solids'>Premium Solids</option>
                         <option value='headwear'>Headwear</option>
-                        <option value='shirt'>Shirt</option>
+                        <option value='oversize-t-shirt'>
+                            Oversize T-shirt
+                        </option>
+                        <option value='shirt'>shirt</option>
                         <option value='jackets'>Jackets</option>
                         <option value='headwear'>Headwear</option>
                         <option value='bottomwear'>Bottomwear</option>
@@ -214,6 +218,20 @@ const AddProduct = () => {
                             This field is required
                         </span>
                     )}
+                    <div className='flex items-center gap-4 mt-4 '>
+                        <input
+                            {...register("deals")}
+                            type='checkbox'
+                            name='deals'
+                            id='deals'
+                            className='transform scale-150'
+                        />
+                        <label
+                            htmlFor='deals'
+                            className='block text-xl font-medium text-gray-700'>
+                            Best Deals
+                        </label>
+                    </div>
                 </div>
                 <div className='col-span-1'>
                     <label
@@ -223,11 +241,11 @@ const AddProduct = () => {
                     </label>
                     <select
                         id='fit'
-                        {...register("fit", { required: true })}
+                        {...register("fit")}
                         className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-white focus:ring-indigo-500 focus:border-indigo-500'>
                         <option value=''>Select...</option>
-                        <option value='Regular Fit'>Regular Fit</option>
-                        <option value='Slim Fit'>Slim Fit</option>
+                        <option value='regular-fit'>Regular Fit</option>
+                        <option value='slim-fit'>Slim Fit</option>
                     </select>
                     {errors.fit && (
                         <span className='text-red-500 text-sm'>
@@ -259,7 +277,7 @@ const AddProduct = () => {
                     </label>
                     <input
                         type='text'
-                        {...register("image")}
+                        {...register("image", { required: true })}
                         // onChange={handleImageChange}
                         className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
                     />
@@ -267,6 +285,11 @@ const AddProduct = () => {
                         <p style={{ color: "red" }}>
                             Maximum 5 image URLs allowed
                         </p>
+                    )}
+                    {errors.image && (
+                        <span className='text-red-500 text-sm'>
+                            This field is required
+                        </span>
                     )}
                     <div className='mt-2 flex gap-3'>
                         {imageUrls.map((url, index) => (

@@ -23,11 +23,14 @@ const dashboards = [
     { name: "Home", url: "/" },
     { name: "Dashboard", url: "/admin-dashboard" },
     { name: "Add-Product", url: "/add-product" },
+    { name: "Update-Product", url: "/update-product" },
+    { name: "Confirm-Oder", url: "/customerOrder" },
+    { name: "Highlights Product", url: "/highlights-product" },
+    { name: "Posts", url: "/posts" },
     { name: "Top Moving Text", url: "/top-moving-text" },
     { name: "Banner Moving Text", url: "/banner-moving-text" },
     { name: "Second Banner Moving Text", url: "/second-banner-moving-text" },
-    { name: "Update-Product", url: "/update-product" },
-    { name: "Confirm-Oder", url: "/customerOrder" },
+    { name: "Contact Us", url: "/contact-us" },
 ];
 
 const AdminLayout = (props) => {
