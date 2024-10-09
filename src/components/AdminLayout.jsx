@@ -21,7 +21,7 @@ const drawerWidth = 240;
 
 const dashboards = [
     { name: "Home", url: "/" },
-    { name: "Dashboard", url: "/admin-dashboard" },
+    // { name: "Dashboard", url: "/admin-dashboard" },
     { name: "Add-Product", url: "/add-product" },
     { name: "Update-Product", url: "/update-product" },
     { name: "Confirm-Oder", url: "/customerOrder" },

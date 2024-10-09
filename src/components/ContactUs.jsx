@@ -5,10 +5,10 @@ import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 const ContactUs = () => {
     const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [refetch, setRefetch] = useState(true);
     const [deleteLoading, setDeleteLoading] = useState(false);
-    const [data, setData] = useState([]);
     useEffect(() => {
         setLoading(true);
         (async () => {
