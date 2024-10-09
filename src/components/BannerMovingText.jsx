@@ -25,12 +25,14 @@ const BannerMovingText = () => {
         }).then((response) =>
             response.json()
         ).then((data) => {
+            console.log(data);
+            if(data.matchedCount > 0){
             Swal.fire({
                 icon: "success",
                 title: "Your work has been saved",
                 showConfirmButton: false,
                 timer: 1500
-              });
+              });}
         });
     };
     return (

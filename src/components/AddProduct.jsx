@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
+import Swal from "sweetalert2";
 
 const AddProduct = () => {
     const [imageUrls, setImageUrls] = useState([]);
@@ -8,6 +9,7 @@ const AddProduct = () => {
         register,
         handleSubmit,
         watch,
+        reset,
         formState: { errors },
     } = useForm();
     const images = watch("image");
@@ -40,9 +42,17 @@ const AddProduct = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        }).then(() => {
-            alert("Product added successfully!");
-            setImageUrls([]);
+        }).then((response) => {
+            if (response.ok) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Your work has been saved",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+                reset()
+                setImageUrls([]);
+            }
         })
     );
 
@@ -68,7 +78,7 @@ const AddProduct = () => {
     const onSubmit = (data) => {
         toLowerCaseFields(data);
         data.images = imageUrls;
-        mutation.mutate({...data,timeStump: new Date()});
+        mutation.mutate({...data,timeStamp: new Date()});
     };
 
     return (

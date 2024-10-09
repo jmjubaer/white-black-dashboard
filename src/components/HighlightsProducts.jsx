@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import pleceholder from "../assets/pleceholder.png";
 import { IoSend } from "react-icons/io5";
+import Swal from "sweetalert2";
 const HighlightsProducts = () => {
     const {
         register,
@@ -25,8 +26,8 @@ const HighlightsProducts = () => {
 
                 const result = await response.json();
                 if (result) {
-                    setLinkId(result._id)
-                    setValue("link", result.link)
+                    setLinkId(result._id);
+                    setValue("link", result.link);
                     setLoading(false);
                 }
                 console.log(result);
@@ -41,7 +42,7 @@ const HighlightsProducts = () => {
         setLoading(true);
         (async () => {
             try {
-                const linkId = inputLink.split('/').pop();
+                const linkId = inputLink.split("/").pop();
                 const response = await fetch(
                     `http://localhost:5000/product/${linkId}`
                 );
@@ -65,16 +66,25 @@ const HighlightsProducts = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        }).then(() => {
-            // alert("Product added successfully!");
-        })
+        }).then((response) => {
+            console.log(response);
+            if (response.ok) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Your work has been saved",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            }
+        });
         console.log(linkId);
-    }
-
+    };
 
     return (
         <div className=''>
-            <form  onSubmit={handleSubmit(handleChangeLink)} className='relative w-full h-fit'>
+            <form
+                onSubmit={handleSubmit(handleChangeLink)}
+                className='relative w-full h-fit'>
                 <label
                     htmlFor='link'
                     className='block font-medium text-gray-700'>
@@ -92,10 +102,14 @@ const HighlightsProducts = () => {
                         This field is required
                     </span>
                 )}
-               <button className="absolute bottom-2 right-3 text-2xl text-blue-500"><IoSend /></button>
+                <button className='absolute bottom-2 right-3 text-2xl text-blue-500'>
+                    <IoSend />
+                </button>
             </form>
             <div className='overflow-x-auto mt-10'>
-                <h2 className="text-3xl font-semibold mb-5 text-center">Product Details</h2>
+                <h2 className='text-3xl font-semibold mb-5 text-center'>
+                    Product Details
+                </h2>
                 <table className='min-w-full bg-white border border-gray-200'>
                     <thead>
                         <tr className='border-b '>
@@ -168,7 +182,7 @@ const HighlightsProducts = () => {
                                 </td>
                             </tr>
                         ) : (
-                            <tr className="">No Product details available</tr>
+                            <tr className=''>No Product details available</tr>
                         )}
                     </tbody>
                 </table>
