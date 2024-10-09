@@ -3,6 +3,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const UpDateProduct = () => {
     const {
@@ -13,6 +14,7 @@ const UpDateProduct = () => {
         formState: { errors },
     } = useForm();
     const [loading, setLoading] = useState(true);
+    const [deleteLoading, setDeleteLoading] = useState(false);
     const [refetch, setRefetch] = useState(true);
     const [productData, setProductData] = useState([]);
     useEffect(() => {
@@ -36,7 +38,7 @@ const UpDateProduct = () => {
         })();
     }, [refetch]);
 
-    const onSubmit = async ({searchText}) => {
+    const onSubmit = async ({ searchText }) => {
         const response = await fetch(
             `http://localhost:5000/products/search/${searchText}`
         );
@@ -45,6 +47,45 @@ const UpDateProduct = () => {
             setProductData(data);
         }
     };
+    const handleDelete = async (id) => {
+        try {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const response = await fetch(
+                        `http://localhost:5000/product/delete/${id}`,
+                        {
+                            method: "DELETE",
+                        }
+                    );
+
+                    const result = await response.json();
+                    if (result) {
+                        setRefetch(!refetch);
+                        setDeleteLoading(false);
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your product has been deleted.",
+                            icon: "success",
+                        });
+                    }
+                    console.log(result);
+                }
+            });
+            setDeleteLoading(true);
+        } catch (error) {
+            console.log(error);
+            setDeleteLoading(false);
+        }
+    };
+    const handleEdit = async (id) => {};
     return (
         <div className='overflow-x-auto'>
             <form
@@ -59,10 +100,14 @@ const UpDateProduct = () => {
                     className={`p-2 w-1/2 outline-none border border-slate-600 rounded-lg ${errors.searchText && "border-red-500"}`}
                 />
 
-                <button type="submit" className='bg-blue-500 px-5 py-2 text-white rounded-lg'>
+                <button
+                    type='submit'
+                    className='bg-blue-500 px-5 py-2 text-white rounded-lg'>
                     Search
-                </button>   
-                <button onClick={()=> setRefetch(!refetch)} className='bg-blue-500 px-5 py-2 text-white rounded-lg'>
+                </button>
+                <button
+                    onClick={() => setRefetch(!refetch)}
+                    className='bg-blue-500 px-5 py-2 text-white rounded-lg'>
                     Reset
                 </button>
             </form>
@@ -158,7 +203,10 @@ const UpDateProduct = () => {
                                     </p>
                                 </td>
                                 <td className='px-4 py-3 h-full flex items-center justify-center'>
-                                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+                                    <button
+                                    disabled={deleteLoading}
+                                        onClick={() => handleDelete(item._id)}
+                                        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
                                         <MdDelete />
                                     </button>
                                     <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2'>
