@@ -14,7 +14,7 @@ const ContactUs = () => {
         (async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:5000/contact-us`
+                    `https://amlaa.vercel.app/contact-us`
                 );
 
                 const result = await response.json();
@@ -43,7 +43,7 @@ const ContactUs = () => {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     const response = await fetch(
-                        `http://localhost:5000/contact-us/${id}`,
+                        `https://amlaa.vercel.app/contact-us/${id}`,
                         {
                             method: "DELETE",
                         }
@@ -109,7 +109,9 @@ const ContactUs = () => {
                                     </td>
                                     <td className='px-4 py-3'>{item.email}</td>
                                     <td className='px-4 py-3 '>
-                                        <button onClick={() => setOpenModal(true)} className=' hover:text-blue-500 text-2xl'>
+                                        <button
+                                            onClick={() => setOpenModal(true)}
+                                            className=' hover:text-blue-500 text-2xl'>
                                             <FaEye />
                                         </button>
                                     </td>
@@ -130,29 +132,35 @@ const ContactUs = () => {
                                             <MdDelete />
                                         </button>
                                     </td>
-                                  { openModal && <div className='fixed top-1/2 left-[60%] shadow-xl -translate-x-1/2 -translate-y-1/2 w-[500px] h-fit bg-white border-2 rounded-xl z-[99999999] p-5 text-left max-h-[500px] overflow-y-auto'>
-                                        <button className="text-3xl text-red-500 absolute top-3 right-3" onClick={() => setOpenModal(false)}>
-                                            <IoClose />
-                                        </button>
-                                        <p className='text-lg font-medium'>
-                                            <span className='text-xl font-semibold mr-2'>
-                                                Name:
-                                            </span>{" "}
-                                            {item.name}
-                                        </p>{" "}
-                                        <p className='text-lg font-medium mt-3'>
-                                            <span className='text-xl font-semibold mr-2'>
-                                                Email:
-                                            </span>{" "}
-                                            {item.email}
-                                        </p>
-                                        <p className='text-lg font-medium mt-3'>
-                                            <span className='text-xl font-semibold mr-2'>
-                                                Message:
-                                            </span>{" "}
-                                            {item.message}
-                                        </p>
-                                    </div>}
+                                    {openModal && (
+                                        <div className='fixed top-1/2 left-[60%] shadow-xl -translate-x-1/2 -translate-y-1/2 w-[500px] h-fit bg-white border-2 rounded-xl z-[99999999] p-5 text-left max-h-[500px] overflow-y-auto'>
+                                            <button
+                                                className='text-3xl text-red-500 absolute top-3 right-3'
+                                                onClick={() =>
+                                                    setOpenModal(false)
+                                                }>
+                                                <IoClose />
+                                            </button>
+                                            <p className='text-lg font-medium'>
+                                                <span className='text-xl font-semibold mr-2'>
+                                                    Name:
+                                                </span>{" "}
+                                                {item.name}
+                                            </p>{" "}
+                                            <p className='text-lg font-medium mt-3'>
+                                                <span className='text-xl font-semibold mr-2'>
+                                                    Email:
+                                                </span>{" "}
+                                                {item.email}
+                                            </p>
+                                            <p className='text-lg font-medium mt-3'>
+                                                <span className='text-xl font-semibold mr-2'>
+                                                    Message:
+                                                </span>{" "}
+                                                {item.message}
+                                            </p>
+                                        </div>
+                                    )}
                                 </tr>
                             ))
                         ) : (

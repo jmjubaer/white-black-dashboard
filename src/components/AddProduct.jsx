@@ -36,7 +36,7 @@ const AddProduct = () => {
 
     console.log(imageUrls);
     const mutation = useMutation((data) =>
-        fetch("http://localhost:5000/product/addproducts", {
+        fetch("https://amlaa.vercel.app/product/addproducts", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -50,7 +50,7 @@ const AddProduct = () => {
                     showConfirmButton: false,
                     timer: 1500,
                 });
-                reset()
+                reset();
                 setImageUrls([]);
             }
         })
@@ -78,7 +78,7 @@ const AddProduct = () => {
     const onSubmit = (data) => {
         toLowerCaseFields(data);
         data.images = imageUrls;
-        mutation.mutate({...data,timeStamp: new Date()});
+        mutation.mutate({ ...data, timeStamp: new Date() });
     };
 
     return (

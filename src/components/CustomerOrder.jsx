@@ -13,7 +13,7 @@ const CustomerOrder = () => {
         setLoading(true);
         (async () => {
             try {
-                const response = await fetch(`http://localhost:5000/order`);
+                const response = await fetch(`https://amlaa.vercel.app/order`);
 
                 const result = await response.json();
                 if (result) {
@@ -29,7 +29,7 @@ const CustomerOrder = () => {
     }, [refetch]);
 
     const handleOpenModal = async (id) => {
-        const response = await fetch(`http://localhost:5000/order/${id}`);
+        const response = await fetch(`https://amlaa.vercel.app/order/${id}`);
 
         const result = await response.json();
         if (result) {
@@ -42,38 +42,41 @@ const CustomerOrder = () => {
 
         setOpenModal(false);
     };
-const handleChangeStatus = (e,id) => {
-    const status = e.target.value
-    Swal.fire({
-        title: 'Are you sure?',
-        text: 'You want to change the status of this order?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, change status!'
-    }).then(async(result) => {
-        if (result.isConfirmed) {
-            const response = await fetch(`http://localhost:5000/order/status/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({status}),
-            })
-            const data = await response.json()
-            console.log(data);  
-            if(data.message){
-                setRefetch(!refetch)
-                Swal.fire(
-                    'Status Changed!',
-                    'The status of the order has been changed successfully.',
-                   'success'
-                )
+    const handleChangeStatus = (e, id) => {
+        const status = e.target.value;
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to change the status of this order?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, change status!",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const response = await fetch(
+                    `https://amlaa.vercel.app/order/status/${id}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ status }),
+                    }
+                );
+                const data = await response.json();
+                console.log(data);
+                if (data.message) {
+                    setRefetch(!refetch);
+                    Swal.fire(
+                        "Status Changed!",
+                        "The status of the order has been changed successfully.",
+                        "success"
+                    );
+                }
             }
-        }
-    });
-}
+        });
+    };
     return (
         <div>
             <div className='overflow-x-auto mt-10'>
@@ -152,7 +155,12 @@ const handleChangeStatus = (e,id) => {
                                         )}
                                     </td>
                                     <td className='px-4 py-3 '>
-                                        <select  onChange={(e)=> handleChangeStatus(e,item._id)} defaultValue={item.status} className='border p-2 border-slate-300 rounded outline-none'>
+                                        <select
+                                            onChange={(e) =>
+                                                handleChangeStatus(e, item._id)
+                                            }
+                                            defaultValue={item.status}
+                                            className='border p-2 border-slate-300 rounded outline-none'>
                                             <option value='processing'>
                                                 Processing
                                             </option>

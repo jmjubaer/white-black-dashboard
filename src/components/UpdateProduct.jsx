@@ -28,7 +28,7 @@ const UpDateProduct = () => {
         (async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:5000/products/all`
+                    `https://amlaa.vercel.app/products/all`
                 );
 
                 const result = await response.json();
@@ -67,7 +67,7 @@ const UpDateProduct = () => {
         e.preventDefault();
         console.log(e.target);
         const response = await fetch(
-            `http://localhost:5000/products/search/${e.target.searchText.value}`
+            `https://amlaa.vercel.app/products/search/${e.target.searchText.value}`
         );
         const data = await response.json();
         if (data) {
@@ -87,7 +87,7 @@ const UpDateProduct = () => {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     const response = await fetch(
-                        `http://localhost:5000/product/delete/${id}`,
+                        `https://amlaa.vercel.app/product/delete/${id}`,
                         {
                             method: "DELETE",
                         }
@@ -114,7 +114,9 @@ const UpDateProduct = () => {
     };
     const handleOpenModal = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5000/product/${id}`);
+            const response = await fetch(
+                `https://amlaa.vercel.app/product/${id}`
+            );
             setEditProductId(id);
             const result = await response.json();
             if (result) {
@@ -140,23 +142,23 @@ const UpDateProduct = () => {
         }
     };
     const handleEdit = (data) => {
-        fetch(`http://localhost:5000/product/update/${editProductId}`, {
+        fetch(`https://amlaa.vercel.app/product/update/${editProductId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({...data,images: imageUrls}),
+            body: JSON.stringify({ ...data, images: imageUrls }),
         }).then((response) => {
             if (response.ok) {
                 setOpenModal(false);
-                setEditProductId("")
+                setEditProductId("");
                 Swal.fire({
                     icon: "success",
                     title: "Product Updated successfully",
                     showConfirmButton: false,
                     timer: 1500,
                 });
-                setRefetch(!refetch)
+                setRefetch(!refetch);
                 reset();
                 setImageUrls([]);
                 console.log(response);

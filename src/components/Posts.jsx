@@ -13,7 +13,7 @@ const Post = () => {
         formState: { errors },
     } = useForm();
     useEffect(() => {
-        fetch(`http://localhost:5000/post/${postSerial}`)
+        fetch(`https://amlaa.vercel.app/post/${postSerial}`)
             .then((response) => response.json())
             .then((data) => {
                 setCurrentPost(data);
@@ -23,9 +23,8 @@ const Post = () => {
             });
     }, [postSerial]);
     const onSubmit = (data) => {
-        if(postSerial){
-
-            fetch(`http://localhost:5000/post/${postSerial}`, {
+        if (postSerial) {
+            fetch(`https://amlaa.vercel.app/post/${postSerial}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -33,7 +32,7 @@ const Post = () => {
                 body: JSON.stringify(data),
             })
                 .then((response) => response.json())
-                .then((data) => {   
+                .then((data) => {
                     Swal.fire({
                         icon: "success",
                         title: "Post change successfully",
@@ -41,12 +40,12 @@ const Post = () => {
                         timer: 1500,
                     });
                 });
-        }else{
+        } else {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Select a post serial",
-              });
+            });
         }
     };
     return (
@@ -119,7 +118,9 @@ const Post = () => {
                 className=' grid grid-cols-4 gap-6 mt-5'>
                 <div className=''>
                     <img
-                        src={currentPost.image ? currentPost.image : pleceholder}
+                        src={
+                            currentPost.image ? currentPost.image : pleceholder
+                        }
                         className='w-full h-full rounded-md object-cover'
                     />
                 </div>
@@ -132,7 +133,7 @@ const Post = () => {
                         </label>
                         <input
                             id='image'
-                            placeholder="Image URL"
+                            placeholder='Image URL'
                             {...register("image", { required: true })}
                             className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
                         />
@@ -180,7 +181,7 @@ const Post = () => {
                             Post link:
                         </label>
                         <input
-                            placeholder="Post link"
+                            placeholder='Post link'
                             id='link'
                             {...register("link", { required: true })}
                             className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'

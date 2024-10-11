@@ -9,28 +9,30 @@ const TopMovingText = () => {
         formState: { errors },
     } = useForm();
     useEffect(() => {
-        fetch("http://localhost:5000/top-moving-text").then((response) =>
-            response.json()
-        ).then((data) => {setText(data)});
+        fetch("https://amlaa.vercel.app/top-moving-text")
+            .then((response) => response.json())
+            .then((data) => {
+                setText(data);
+            });
     }, []);
 
     const onSubmit = (data) => {
-        fetch(`http://localhost:5000/top-moving-text/${text._id}`, {
+        fetch(`https://amlaa.vercel.app/top-moving-text/${text._id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        }).then((response) =>
-            response.json()
-        ).then((data) => {
-            Swal.fire({
-                icon: "success",
-                title: "Your work has been saved",
-                showConfirmButton: false,
-                timer: 1500
-              });
-        });
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                Swal.fire({
+                    icon: "success",
+                    title: "Your work has been saved",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            });
     };
     return (
         <div>
